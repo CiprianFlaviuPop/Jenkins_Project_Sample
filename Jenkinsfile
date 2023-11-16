@@ -19,13 +19,16 @@ pipeline {
    stages {
        stage('Build') {
            steps {
-               sh 'docker build -t $REGISTRY_IMAGE:$GIT_COMMIT_SHORT-jenkins-$CURRENT_BUILD_NUMBER -f $DOCKERFILE_PATH .'
+               //sh 'docker build -t $REGISTRY_IMAGE:$GIT_COMMIT_SHORT-jenkins-$CURRENT_BUILD_NUMBER -f $DOCKERFILE_PATH .'
+              docker build -t $REGISTRY_IMAGE:$GIT_COMMIT_SHORT-jenkins-$CURRENT_BUILD_NUMBER -f $DOCKERFILE_PATH .
            }
        }
        stage('Push') {
            steps {
-               sh 'docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY'
-               sh 'docker push $REGISTRY_IMAGE:$GIT_COMMIT_SHORT-jenkins-$CURRENT_BUILD_NUMBER'
+               //sh 'docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY'
+              docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY
+               //sh 'docker push $REGISTRY_IMAGE:$GIT_COMMIT_SHORT-jenkins-$CURRENT_BUILD_NUMBER'
+              docker push $REGISTRY_IMAGE:$GIT_COMMIT_SHORT-jenkins-$CURRENT_BUILD_NUMBER
            }
        }
    }
